@@ -49,6 +49,11 @@ function createEmployee(salary: number | string): Director | Teacher {
   return new Director();
 }
 
+// Type predicate function for Director
+function isDirector(employee: Director | Teacher): employee is Director {
+  return (employee as Director).workDirectorTasks !== undefined;
+}
+
 // Test data
 const employees = [
   { salary: 200, label: "Employee 1 (Salary: 200)" },
@@ -56,9 +61,10 @@ const employees = [
   { salary: "$500", label: "Employee 3 (Salary: '$500')" },
 ];
 
-// Console output
-employees.forEach((emp) => {
-  console.log(emp.label, createEmployee(emp.salary));
+// Console output: show created employee objects
+employees.forEach(({ salary, label }) => {
+  const employee = createEmployee(salary);
+  console.log(label, employee);
 });
 
 // DOM output
@@ -71,10 +77,9 @@ if (app) {
       ${employees
         .map(({ salary, label }) => {
           const emp = createEmployee(salary);
-          const role =
-            emp instanceof Director
-              ? (emp as Director).workDirectorTasks()
-              : (emp as Teacher).workTeacherTasks();
+          const role = isDirector(emp)
+            ? emp.workDirectorTasks()
+            : emp.workTeacherTasks();
 
           return `<li><strong>${label}</strong>: ${role}</li>`;
         })
