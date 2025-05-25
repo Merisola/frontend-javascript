@@ -54,7 +54,19 @@ function isDirector(employee: Director | Teacher): employee is Director {
   return (employee as Director).workDirectorTasks !== undefined;
 }
 
-// Test data
+// String literal type for Subjects
+type Subjects = "Math" | "History";
+
+// Function teachClass
+function teachClass(todayClass: Subjects): string {
+  if (todayClass === "Math") {
+    return "Teaching Math";
+  } else {
+    return "Teaching History";
+  }
+}
+
+// Test data for employees
 const employees = [
   { salary: 200, label: "Employee 1 (Salary: 200)" },
   { salary: 1000, label: "Employee 2 (Salary: 1000)" },
@@ -85,5 +97,9 @@ if (app) {
         })
         .join("")}
     </ul>
+
+    <h2>Class Teaching Demonstration</h2>
+    <p>${teachClass("Math")}</p>
+    <p>${teachClass("History")}</p>
   `;
 }
