@@ -12,6 +12,14 @@ interface Directors extends Teacher {
   numberOfReports: number;
 }
 
+// Define printTeacherFunction type (preferred for function types)
+type printTeacherFunction = (firstName: string, lastName: string) => string;
+
+// Implement printTeacher function
+const printTeacher: printTeacherFunction = (firstName, lastName) => {
+  return `${firstName.charAt(0)}. ${lastName}`;
+};
+
 // Create a Teacher instance
 const teacher: Teacher = {
   firstName: "John",
@@ -33,6 +41,12 @@ const director1: Directors = {
 };
 
 console.log("Director:", director1);
+
+// Use printTeacher
+console.log(
+  "Printed Teacher:",
+  printTeacher(teacher.firstName, teacher.lastName)
+);
 
 // Render to the DOM
 const app = document.createElement("div");
@@ -56,6 +70,9 @@ app.innerHTML = `
     }</li>
     <li><strong>Number of Reports:</strong> ${director1.numberOfReports}</li>
   </ul>
+
+  <h2>Formatted Teacher Name</h2>
+  <p>${printTeacher(teacher.firstName, teacher.lastName)}</p>
 `;
 
 document.body.appendChild(app);
