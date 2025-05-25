@@ -12,7 +12,7 @@ interface Directors extends Teacher {
   numberOfReports: number;
 }
 
-// Define printTeacherFunction type (preferred for function types)
+// Define printTeacherFunction type (for function signature)
 type printTeacherFunction = (firstName: string, lastName: string) => string;
 
 // Implement printTeacher function
@@ -48,6 +48,43 @@ console.log(
   printTeacher(teacher.firstName, teacher.lastName)
 );
 
+// Define an interface for the StudentClass constructor parameters
+interface StudentClassConstructor {
+  firstName: string;
+  lastName: string;
+}
+
+// Define an interface for the StudentClass itself
+interface StudentClassInterface {
+  workOnHomework(): string;
+  displayName(): string;
+}
+
+// Implement the StudentClass with interfaces
+class StudentClass implements StudentClassInterface {
+  firstName: string;
+  lastName: string;
+
+  constructor({ firstName, lastName }: StudentClassConstructor) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  workOnHomework(): string {
+    return "Currently working";
+  }
+
+  displayName(): string {
+    return this.firstName;
+  }
+}
+
+// Example usage
+const student = new StudentClass({ firstName: "Alice", lastName: "Smith" });
+
+console.log(student.displayName()); // Output: Alice
+console.log(student.workOnHomework()); // Output: Currently working
+
 // Render to the DOM
 const app = document.createElement("div");
 app.innerHTML = `
@@ -73,6 +110,12 @@ app.innerHTML = `
 
   <h2>Formatted Teacher Name</h2>
   <p>${printTeacher(teacher.firstName, teacher.lastName)}</p>
+
+  <h2>Student Info</h2>
+  <ul>
+    <li><strong>Name:</strong> ${student.displayName()}</li>
+    <li><strong>Homework Status:</strong> ${student.workOnHomework()}</li>
+  </ul>
 `;
 
 document.body.appendChild(app);
